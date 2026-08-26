@@ -2,6 +2,10 @@
 
 CSV SafeCheck is a free, independent preflight utility for current Shopify product CSV files. It reports a documented subset of deterministic import problems with exact row and column locations and applies only conservative formatting fixes.
 
+## Use the checker online
+
+[Open CSV SafeCheck](https://csv-safecheck.pages.dev/) in a current browser. There is no sign-in or upload step: the static page is delivered by Cloudflare Pages, while the selected CSV contents are processed in browser memory and are not sent to the host.
+
 ## Download the offline edition
 
 1. [Download CSV SafeCheck offline v0.1.0](https://github.com/ReconcileKit/csv-safecheck/releases/download/v0.1.0/csv-safecheck-offline-v0.1.0.zip) (ZIP, 25,363 bytes).
@@ -34,4 +38,4 @@ After a successful local result, the included checker can show a research page w
 
 This is a self-service research release. Use GitHub issues only for reproducible software defects that contain no store or customer data. Do not submit private files. Current scope and limitations are included in the download.
 
-GitHub Pages is intentionally disabled. GitHub is used only to distribute the downloadable software release while the preferred hosted launch is pending provider reauthorization.
+GitHub Pages is intentionally disabled. The hosted checker uses Cloudflare Pages; GitHub distributes the downloadable offline release and public source.
