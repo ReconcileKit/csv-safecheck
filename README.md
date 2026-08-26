@@ -14,6 +14,15 @@ The checker has no installer, account, analytics collector, upload endpoint, rem
 
 The initial release checks only a documented subset and does not guarantee Shopify import acceptance. Back up your catalog and use Shopify's import preview before applying changes. CSV SafeCheck is not affiliated with, sponsored by, or endorsed by Shopify.
 
+## Shopify CSV problems covered
+
+- **Illegal quoting, invalid UTF-8, and malformed rows:** the strict parser rejects malformed quoted-field suffixes, invalid encoding, NUL bytes, and inconsistent column counts instead of silently merging data.
+- **Invalid or incorrect product CSV headers:** the current profile checks case-sensitive core headings, duplicate headers, create/update identifiers, and important dynamic-column exceptions.
+- **Duplicate product variants:** expressed option combinations are compared within each handle while image-only continuation rows are excluded from duplicate-variant findings.
+- **Deterministic field checks:** the release checks handle syntax, status, documented booleans, money syntax, variant dependencies, unsupported variant-metafield headers, and HTTPS product-image syntax. Store-dependent conditions remain explicitly unverified.
+
+Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en/manual/products/import-export/using-csv?locale=en-US), [product import instructions](https://help.shopify.com/en/manual/products/import-export/import-products), and [common product CSV import problems](https://help.shopify.com/en/manual/products/import-export/common-import-issues). The download includes longer guides with exact boundaries and safe next steps.
+
 ## Repair Pack research
 
 The free checker remains useful without payment. A one-time `$9` Local Repair Pack—local batch files, deterministic repair export, and a before/after audit bundle—is only a product hypothesis and is not for sale.
