@@ -4,11 +4,12 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 ## Download the offline edition
 
-1. Open the [latest GitHub Release](https://github.com/ReconcileKit/csv-safecheck/releases/latest).
-2. Download `csv-safecheck-offline-v0.1.0.zip` and, if desired, verify it against `SHA256SUMS.txt`.
-3. Unzip the archive.
-4. Open `index.html` in a current desktop browser.
-5. Choose a synthetic or authorized Shopify product CSV and run the local preflight.
+1. [Download CSV SafeCheck offline v0.1.0](https://github.com/ReconcileKit/csv-safecheck/releases/download/v0.1.0/csv-safecheck-offline-v0.1.0.zip) (ZIP, 25,363 bytes).
+2. Optionally download [SHA256SUMS.txt](https://github.com/ReconcileKit/csv-safecheck/releases/download/v0.1.0/SHA256SUMS.txt) and verify the archive before opening it.
+3. Unzip the archive and open `index.html` in a current desktop browser.
+4. Choose a synthetic or authorized Shopify product CSV and run the local preflight.
+
+For release notes and the complete asset list, see the [latest GitHub Release](https://github.com/ReconcileKit/csv-safecheck/releases/latest).
 
 The checker has no installer, account, analytics collector, upload endpoint, remote script, AI API, or payment integration. Selected CSV contents are processed in browser memory. Review the included Privacy, Terms, Limitations, Acceptable Use, and Refund pages before use.
 
