@@ -38,4 +38,4 @@ After a successful local result, the included checker can show a research page w
 
 This is a self-service research release. Use GitHub issues only for reproducible software defects that contain no store or customer data. Do not submit private files. Current scope and limitations are included in the download.
 
-GitHub Pages is intentionally disabled. The hosted checker uses Cloudflare Pages; GitHub distributes the downloadable offline release and public source.
+GitHub Pages is intentionally disabled. The hosted checker uses Cloudflare Pages; GitHub distributes the downloadable offline release.
