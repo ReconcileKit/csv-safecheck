@@ -4,7 +4,7 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 ## Download the offline edition
 
-1. Open the latest GitHub Release.
+1. Open the [latest GitHub Release](https://github.com/ReconcileKit/csv-safecheck/releases/latest).
 2. Download `csv-safecheck-offline-v0.1.0.zip` and, if desired, verify it against `SHA256SUMS.txt`.
 3. Unzip the archive.
 4. Open `index.html` in a current desktop browser.
