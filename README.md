@@ -32,10 +32,10 @@ Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en
 
 The free checker remains useful without payment. A one-time `$9` Local Repair Pack—local batch files, deterministic repair export, and a before/after audit bundle—is only a product hypothesis and is not for sale.
 
-After a successful local result, the included checker can show a research page with an optional prefilled public GitHub issue. Never attach or paste CSV files, catalog data, store data, or personal data into an issue. Issues are not a support channel, no individual response is promised, and submitting one is not a purchase.
+To share private interest without a GitHub account or public post, email [reconcilekit@proton.me](mailto:reconcilekit@proton.me?subject=CSV%20SafeCheck%3A%20%249%20Local%20Repair%20Pack%20interest&amp;body=I%20would%20consider%20the%20one-time%20%249%20Local%20Repair%20Pack.%20Do%20not%20attach%20or%20paste%20CSV%20files%2C%20catalog%20data%2C%20store%20data%2C%20or%20personal%20data.) using the fixed subject. Never attach or paste CSV files, catalog data, store data, or personal data. This is not a support channel, no individual response is promised, and sending interest is not a purchase.
 
 ## Support and scope
 
-This is a self-service research release. Use GitHub issues only for reproducible software defects that contain no store or customer data. Do not submit private files. Current scope and limitations are included in the download.
+This is a self-service research release. GitHub issues are only for reproducible software defects that contain no store or customer data; they are not the sole or required commercial-intent gate. Do not submit private files. Current scope and limitations are included in the download.
 
 GitHub Pages is intentionally disabled. The hosted checker uses Cloudflare Pages; GitHub distributes the downloadable offline release.
