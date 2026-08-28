@@ -26,6 +26,7 @@ export const PLAN = Object.freeze({
   width: 1280,
   height: 720,
   priceSelector: ".hero .interest-link",
+  videoFinalization: "close-context-save-video-close-browser",
   plannedDurationSeconds: 90,
   cspEnforced: true,
   allowedHosts: ALLOWED_HOSTS,
@@ -152,7 +153,9 @@ async function capture() {
 
   let rawVideo;
   let downloads;
+  let videoPath;
   try {
+    try {
     const landingResponse = await page.goto(ORIGIN, { waitUntil: "networkidle", timeout: 30_000 });
     if (!landingResponse || landingResponse.status() !== 200 || page.url() !== ORIGIN) {
       throw new Error(`Canonical production load failed: ${landingResponse?.status()} ${page.url()}`);
@@ -205,14 +208,15 @@ async function capture() {
     if (responses.some((entry) => entry.status >= 400)) throw new Error("A production resource returned an error status");
     downloads = { corrected, report };
     rawVideo = page.video();
+    } finally {
+      await context.close();
+    }
+    if (!rawVideo || !downloads) throw new Error("Capture did not complete");
+    videoPath = path.join(OUTPUT, "csv-safecheck-demo-raw.webm");
+    await rawVideo.saveAs(videoPath);
   } finally {
-    await context.close();
     await browser.close();
   }
-
-  if (!rawVideo || !downloads) throw new Error("Capture did not complete");
-  const videoPath = path.join(OUTPUT, "csv-safecheck-demo-raw.webm");
-  await rawVideo.saveAs(videoPath);
   const endedAt = new Date();
   const evidence = {
     schemaVersion: 1,
