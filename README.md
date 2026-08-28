@@ -30,9 +30,9 @@ Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en
 
 ## Local Batch Audit Pack
 
-The free checker remains useful without payment. For people who need to check a batch, the one-time [Local Batch Audit Pack checkout](https://csv-safecheck-usdc-checkout.csv-safecheck-usdc-checkout.workers.dev/) processes up to 25 Shopify CSVs locally in one browser session, produces a combined audit report, and exports separate corrected copies only for deterministic safe fixes.
+The free checker remains useful without payment. For people who need to check a batch, the **$3.00 USD one-time Local Batch Audit Pack** processes up to 25 Shopify CSVs locally in one browser session, produces per-file reports plus a combined audit report, and exports separate corrected copies only for deterministic safe fixes when no formula risk is detected. There is no subscription.
 
-The temporary sprint price is a unique exact quote between `2.990001` and `3.000000` native USDC on Base Mainnet. Card checkout is being prepared separately. The checkout does not connect to a wallet and never requests a signature, private key, seed phrase, password, or token approval. Read the displayed network, token contract, address, exact amount, and payment/refund boundary before sending. The receiving address is receive-only from this application's perspective, so wrong transfers and duplicate payments cannot be automatically returned.
+The temporary [Base-USDC checkout](https://csv-safecheck-usdc-checkout.csv-safecheck-usdc-checkout.workers.dev/) is available now while the Lemon Squeezy card checkout is under review. It creates a unique exact quote between `2.990001` and `3.000000` native USDC on Base Mainnet for the same v0.1.0 artifact; the small variation associates one payment with one entitlement and is not an exchange-rate claim. The checkout does not connect to a wallet and never requests a signature, private key, seed phrase, password, or token approval. Read the displayed network, token contract, address, exact amount, and payment/refund boundary before sending. The receiving address is receive-only from this application's perspective, so wrong transfers and duplicate payments cannot be automatically returned.
 
 ## Support and scope
 

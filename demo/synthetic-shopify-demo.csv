@@ -1,0 +1,3 @@
+ Title,URL handle,Price,Status,Charge tax,Product image URL
+Demo Shirt,demo-shirt,19.99,active,true,https://example.com/demo-shirt.jpg
+Second Demo,broken handle,$12.00,published,yes,http://example.com/demo.jpg

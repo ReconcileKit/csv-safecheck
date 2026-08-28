@@ -1,0 +1,12 @@
+{
+  "name": "csv-safecheck-production-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test record-production-demo.test.mjs",
+    "capture": "node record-production-demo.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
