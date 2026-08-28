@@ -16,7 +16,18 @@ test("capture plan is bounded to real production, synthetic data, and a reviewer
   assert.equal(plan.width, 1280);
   assert.equal(plan.height, 720);
   assert.ok(plan.plannedDurationSeconds >= 60 && plan.plannedDurationSeconds <= 120);
+  assert.equal(plan.cspEnforced, true);
   assert.deepEqual(plan.allowedHosts, ["csv-safecheck.pages.dev"]);
+  assert.deepEqual(plan.allowedMethods, ["GET", "HEAD"]);
+  assert.deepEqual(plan.allowedPaths, [
+    "/",
+    "/styles.css",
+    "/src/app.js",
+    "/src/csv.js",
+    "/src/rules.js",
+    "/src/report.js",
+    "/repair-pack"
+  ]);
   assert.ok(plan.requiredSelectors.includes("#issue-rows tr"));
   assert.ok(plan.requiredDownloads.includes("corrected-csv"));
   assert.ok(plan.requiredDownloads.includes("json-report"));

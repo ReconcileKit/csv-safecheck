@@ -9,6 +9,16 @@ const PAID_URL = "https://csv-safecheck.pages.dev/repair-pack";
 const FIXTURE = path.join(HERE, "synthetic-shopify-demo.csv");
 const OUTPUT = path.resolve(process.env.DEMO_OUTPUT_DIR || path.join(HERE, "artifacts"));
 const ALLOWED_HOSTS = ["csv-safecheck.pages.dev"];
+const ALLOWED_METHODS = ["GET", "HEAD"];
+const ALLOWED_PATHS = [
+  "/",
+  "/styles.css",
+  "/src/app.js",
+  "/src/csv.js",
+  "/src/rules.js",
+  "/src/report.js",
+  "/repair-pack"
+];
 
 export const PLAN = Object.freeze({
   origin: ORIGIN,
@@ -16,63 +26,67 @@ export const PLAN = Object.freeze({
   width: 1280,
   height: 720,
   plannedDurationSeconds: 90,
+  cspEnforced: true,
   allowedHosts: ALLOWED_HOSTS,
+  allowedMethods: ALLOWED_METHODS,
+  allowedPaths: ALLOWED_PATHS,
   requiredSelectors: ["#csv-file", "#analyze", "#summary", "#issue-rows tr", "#download-csv", "#download-report"],
   requiredDownloads: ["corrected-csv", "json-report"]
 });
 
 const sha256 = async (filename) => createHash("sha256").update(await readFile(filename)).digest("hex");
 
-async function installOverlay(page) {
-  await page.evaluate(() => {
-    document.querySelector("#csv-safecheck-demo-overlay")?.remove();
-    document.querySelector("#csv-safecheck-demo-pointer")?.remove();
-    document.querySelector("#csv-safecheck-demo-overlay-style")?.remove();
-
-    const style = document.createElement("style");
-    style.id = "csv-safecheck-demo-overlay-style";
-    style.textContent = `
-      #csv-safecheck-demo-overlay { position: fixed; z-index: 2147483647; left: 24px; right: 24px; bottom: 20px; padding: 14px 20px; border-radius: 12px; background: rgba(17, 33, 25, .94); color: #fff; font: 700 24px/1.25 system-ui, sans-serif; box-shadow: 0 8px 30px rgba(0,0,0,.28); pointer-events: none; }
-      #csv-safecheck-demo-overlay small { display: block; margin-top: 3px; color: #cdebd9; font: 500 14px/1.25 system-ui, sans-serif; }
-      #csv-safecheck-demo-pointer { position: fixed; z-index: 2147483647; width: 22px; height: 22px; border: 4px solid white; border-radius: 50%; background: #e65f38; box-shadow: 0 2px 12px rgba(0,0,0,.5); transform: translate(-50%, -50%); transition: left .55s ease, top .55s ease; pointer-events: none; }
-      .csv-safecheck-demo-highlight { outline: 4px solid #e65f38 !important; outline-offset: 5px !important; border-radius: 6px; }
-    `;
-    document.head.append(style);
-
-    const overlay = document.createElement("div");
-    overlay.id = "csv-safecheck-demo-overlay";
-    overlay.innerHTML = `<span></span><small>Editorial demo caption · synthetic data only</small>`;
-    document.body.append(overlay);
-
-    const pointer = document.createElement("div");
-    pointer.id = "csv-safecheck-demo-pointer";
-    pointer.style.left = "92%";
-    pointer.style.top = "14%";
-    document.body.append(pointer);
+async function hold(page, selector, seconds) {
+  const target = page.locator(selector).first();
+  await target.scrollIntoViewIfNeeded();
+  const box = await target.boundingBox();
+  if (box) await page.mouse.move(box.x + Math.min(box.width - 4, 24), box.y + Math.min(box.height - 4, 18), { steps: 10 });
+  await target.evaluate((element) => {
+    if (element instanceof HTMLElement) element.focus({ preventScroll: true });
   });
-}
-
-async function annotate(page, caption, selector, seconds) {
-  await page.evaluate(({ text, targetSelector }) => {
-    const overlay = document.querySelector("#csv-safecheck-demo-overlay span");
-    if (overlay) overlay.textContent = text;
-    document.querySelectorAll(".csv-safecheck-demo-highlight").forEach((element) => element.classList.remove("csv-safecheck-demo-highlight"));
-    const target = targetSelector ? document.querySelector(targetSelector) : null;
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
-      target.classList.add("csv-safecheck-demo-highlight");
-      const rect = target.getBoundingClientRect();
-      const pointer = document.querySelector("#csv-safecheck-demo-pointer");
-      if (pointer) {
-        pointer.style.left = `${Math.min(window.innerWidth - 20, Math.max(20, rect.right - 16))}px`;
-        pointer.style.top = `${Math.min(window.innerHeight - 90, Math.max(20, rect.top + 18))}px`;
-      }
-    }
-  }, { text: caption, targetSelector: selector });
   await page.waitForTimeout(seconds * 1000);
 }
 
-async function saveDownload(page, selector, destination) {
+async function validateDownload(kind, destination) {
+  const contents = await readFile(destination);
+  if (contents.byteLength === 0) throw new Error(`${kind} download was empty`);
+  const text = contents.toString("utf8");
+  if (kind === "corrected-csv") {
+    if (!text.startsWith("Title,URL handle,Price,Status,Charge tax,Product image URL\r\n")) {
+      throw new Error("Corrected CSV did not contain the deterministic trimmed header");
+    }
+    if (!text.includes("Second Demo,broken handle,$12.00,published,yes,http://example.com/demo.jpg")) {
+      throw new Error("Corrected CSV did not preserve the synthetic unfixed row");
+    }
+    return { kind, checks: ["trimmed-header", "unfixed-synthetic-row-preserved"] };
+  }
+  if (kind === "json-report") {
+    let report;
+    try {
+      report = JSON.parse(text);
+    } catch {
+      throw new Error("JSON report download was malformed");
+    }
+    const expectedSummary = report?.schemaVersion === 2
+      && report?.summary?.rows === 2
+      && report?.summary?.columns === 6
+      && report?.summary?.errors === 6
+      && report?.summary?.unverified === 2
+      && report?.summary?.fixesAvailable === 1;
+    if (!expectedSummary) throw new Error("JSON report summary did not match the synthetic fixture");
+    if (!report.issues?.some((issue) => issue.ruleId === "header-whitespace" && issue.row === 1 && issue.fixable === true)) {
+      throw new Error("JSON report omitted the expected safe header finding");
+    }
+    if (!report.issues?.some((issue) => issue.ruleId === "handle-format" && issue.row === 3 && issue.column === "URL handle")) {
+      throw new Error("JSON report omitted the expected row/cell finding");
+    }
+    if (/Demo Shirt|broken handle|\$12\.00/.test(text)) throw new Error("JSON report exposed a synthetic cell value");
+    return { kind, checks: ["schema-v2", "expected-summary", "exact-findings", "no-cell-values"] };
+  }
+  throw new Error(`Unknown download kind: ${kind}`);
+}
+
+async function saveDownload(page, selector, destination, kind) {
   const [download] = await Promise.all([
     page.waitForEvent("download"),
     page.locator(selector).click()
@@ -80,11 +94,13 @@ async function saveDownload(page, selector, destination) {
   await download.saveAs(destination);
   const failure = await download.failure();
   if (failure) throw new Error(`Download failed: ${failure}`);
+  const validation = await validateDownload(kind, destination);
   return {
     filename: download.suggestedFilename(),
     path: path.basename(destination),
     sha256: await sha256(destination),
-    bytes: (await readFile(destination)).byteLength
+    bytes: (await readFile(destination)).byteLength,
+    validation
   };
 }
 
@@ -95,6 +111,7 @@ async function capture() {
   await mkdir(downloadsDir, { recursive: true });
 
   const unexpectedUrls = [];
+  const requests = [];
   const responses = [];
   const consoleErrors = [];
   const pageErrors = [];
@@ -102,15 +119,22 @@ async function capture() {
   const context = await browser.newContext({
     viewport: { width: PLAN.width, height: PLAN.height },
     acceptDownloads: true,
-    bypassCSP: true,
     colorScheme: "light",
     recordVideo: { dir: OUTPUT, size: { width: PLAN.width, height: PLAN.height } }
   });
 
   await context.route("**/*", async (route) => {
-    const requestUrl = route.request().url();
+    const request = route.request();
+    const requestUrl = request.url();
     const parsed = new URL(requestUrl);
-    if (["http:", "https:"].includes(parsed.protocol) && !ALLOWED_HOSTS.includes(parsed.hostname)) {
+    const observed = { method: request.method(), url: requestUrl };
+    requests.push(observed);
+    const permitted = ["http:", "https:"].includes(parsed.protocol)
+      && ALLOWED_HOSTS.includes(parsed.hostname)
+      && ALLOWED_METHODS.includes(request.method())
+      && ALLOWED_PATHS.includes(parsed.pathname)
+      && parsed.search === "";
+    if (!permitted) {
       unexpectedUrls.push(requestUrl);
       await route.abort("blockedbyclient");
       return;
@@ -134,45 +158,42 @@ async function capture() {
     }
     if (!(await page.title()).includes("CSV SafeCheck")) throw new Error("Unexpected production title");
     await page.locator("text=Local Batch Audit Pack — $3.00 USD, one-time").waitFor();
-    await installOverlay(page);
-
-    await annotate(page, "CSV SafeCheck — live production demo", "#hero-title", 7);
-    await annotate(page, "Catch Shopify CSV problems before import", ".lede", 6);
-    await annotate(page, "Free single-file checker; paid batch pack is $3.00 USD, one-time", ".hero .interest-link", 7);
-    await annotate(page, "Choose a synthetic Shopify-style CSV", ".upload-panel", 6);
+    await hold(page, "#hero-title", 7);
+    await hold(page, ".lede", 6);
+    await hold(page, ".hero .interest-link", 7);
+    await hold(page, ".upload-panel", 6);
 
     await page.locator("#csv-file").setInputFiles(FIXTURE);
     await page.locator("#analyze").waitFor({ state: "visible" });
     if (await page.locator("#analyze").isDisabled()) throw new Error("Analyze action stayed disabled");
-    await annotate(page, "The selected CSV stays in this browser", "#file-state", 6);
+    await hold(page, "#file-state", 6);
 
     await page.locator("#analyze").click();
     await page.locator("#results:not([hidden])").waitFor({ state: "visible" });
     await page.locator("#issue-rows tr").first().waitFor({ state: "visible" });
-    await annotate(page, "Deterministic checks — no upload or AI API", "#summary", 7);
-    await annotate(page, "Exact row and cell explanations", "#issue-rows tr:nth-child(1)", 9);
-    await annotate(page, "Unsafe meanings are reported; only unambiguous formatting is fixed", "#issue-rows tr:nth-child(2)", 7);
+    await hold(page, "#summary", 7);
+    await hold(page, "#issue-rows tr:nth-child(1)", 9);
+    await hold(page, "#issue-rows tr:nth-child(2)", 7);
 
     const correctedButton = page.locator("#download-csv");
     if (!(await correctedButton.isVisible()) || await correctedButton.isDisabled()) throw new Error("Safe corrected CSV was not offered");
-    await annotate(page, "Real safe-correction and report exports", ".actions", 4);
+    await hold(page, ".actions", 4);
     const correctedPath = path.join(downloadsDir, "synthetic-shopify-demo-safe-fixes.csv");
-    const corrected = await saveDownload(page, "#download-csv", correctedPath);
-    await annotate(page, "Corrected CSV downloaded — source file remains unchanged", "#download-csv", 3);
+    const corrected = await saveDownload(page, "#download-csv", correctedPath, "corrected-csv");
+    await hold(page, "#download-csv", 3);
     const reportPath = path.join(downloadsDir, "synthetic-shopify-demo-report.json");
-    const report = await saveDownload(page, "#download-report", reportPath);
-    await annotate(page, "JSON findings report downloaded", "#download-report", 3);
+    const report = await saveDownload(page, "#download-report", reportPath, "json-report");
+    await hold(page, "#download-report", 3);
 
-    await annotate(page, "No upload endpoint, analytics, remote script, or store connection", ".trust-grid", 7);
+    await hold(page, ".trust-grid", 7);
 
     const paidResponse = await page.goto(PAID_URL, { waitUntil: "networkidle", timeout: 30_000 });
     if (!paidResponse || paidResponse.status() !== 200 || page.url() !== PAID_URL) {
       throw new Error(`Paid-product page load failed: ${paidResponse?.status()} ${page.url()}`);
     }
-    await installOverlay(page);
-    await annotate(page, "Local Batch Audit Pack — $3.00 USD, one-time", "h1", 8);
-    await annotate(page, "Up to 25 files; per-file reports; combined audit; no subscription", "main p:nth-of-type(3)", 8);
-    await annotate(page, "csv-safecheck.pages.dev", "h1", 5);
+    await hold(page, "h1", 8);
+    await hold(page, "main p:nth-of-type(3)", 8);
+    await hold(page, "h1", 5);
 
     if (unexpectedUrls.length) throw new Error(`Unexpected network destinations: ${unexpectedUrls.join(", ")}`);
     if (consoleErrors.length || pageErrors.length) throw new Error(`Browser errors: ${[...consoleErrors, ...pageErrors].join(" | ")}`);
@@ -196,9 +217,11 @@ async function capture() {
     endedAt: endedAt.toISOString(),
     elapsedSeconds: Math.round((endedAt - startedAt) / 1000),
     viewport: { width: PLAN.width, height: PLAN.height },
+    cspEnforced: true,
     fixture: { filename: path.basename(FIXTURE), sha256: await sha256(FIXTURE) },
     video: { filename: path.basename(videoPath), sha256: await sha256(videoPath), bytes: (await readFile(videoPath)).byteLength },
     downloads,
+    requests,
     responses,
     unexpectedUrls,
     consoleErrors,
