@@ -1,0 +1,106 @@
+name: Verify public demo delivery
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-playback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the public verification harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: demo/package-lock.json
+
+      - name: Install the pinned browser harness
+        working-directory: demo
+        run: npm ci
+
+      - name: Verify decoded playback in installed Chrome
+        working-directory: demo
+        run: |
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import assert from "node:assert/strict";
+          import { writeFile } from "node:fs/promises";
+          import { chromium } from "playwright";
+
+          const url = "https://csv-safecheck.pages.dev/demo";
+          const browser = await chromium.launch({ channel: "chrome", headless: true });
+          const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+          const consoleErrors = [];
+          page.on("console", (message) => {
+            if (message.type() === "error") consoleErrors.push(message.text());
+          });
+          page.on("pageerror", (error) => consoleErrors.push(String(error)));
+
+          const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30_000 });
+          assert.equal(response?.status(), 200);
+          await page.locator("video").waitFor({ state: "visible" });
+          await page.locator("video").evaluate(async (video) => {
+            video.muted = true;
+            await video.play();
+          });
+          await page.waitForFunction(() => {
+            const video = document.querySelector("video");
+            return Boolean(video && video.currentTime > 1 && video.videoWidth === 1280 && video.videoHeight === 720);
+          }, undefined, { timeout: 30_000 });
+
+          const evidence = await page.locator("video").evaluate((video) => ({
+            currentSrc: video.currentSrc,
+            currentTime: video.currentTime,
+            duration: video.duration,
+            readyState: video.readyState,
+            videoWidth: video.videoWidth,
+            videoHeight: video.videoHeight,
+            mediaError: video.error ? { code: video.error.code, message: video.error.message } : null
+          }));
+          assert.match(evidence.currentSrc, /csv-safecheck-demo-v1\.(?:mp4|m3u8)$/);
+          assert.ok(Math.abs(evidence.duration - 104.32) < 0.1);
+          assert.equal(evidence.mediaError, null);
+          assert.deepEqual(consoleErrors, []);
+
+          await page.screenshot({ path: "artifacts/demo-playback.png", fullPage: true });
+          await writeFile("artifacts/browser-evidence.json", `${JSON.stringify(evidence, null, 2)}\n`);
+          console.log(JSON.stringify(evidence));
+          await browser.close();
+          NODE
+
+      - name: Upload decoded-frame evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: csv-safecheck-demo-delivery-evidence
+          path: demo/artifacts/
+          if-no-files-found: warn
+          retention-days: 1
+
+  apple-media-metadata:
+    runs-on: macos-15
+    timeout-minutes: 5
+    steps:
+      - name: Verify HLS through Apple's media framework
+        env:
+          DEMO_HLS_URL: https://csv-safecheck.pages.dev/media/csv-safecheck-demo-v1.m3u8
+        run: |
+          swift - "$DEMO_HLS_URL" <<'SWIFT'
+          import AVFoundation
+          import Foundation
+
+          let url = URL(string: CommandLine.arguments[1])!
+          let asset = AVURLAsset(url: url)
+          let playable = try await asset.load(.isPlayable)
+          let duration = CMTimeGetSeconds(try await asset.load(.duration))
+          guard playable else { fatalError("Apple media framework marked the HLS asset unplayable") }
+          guard abs(duration - 104.32) < 0.1 else { fatalError("Unexpected duration: \(duration)") }
+          print("Apple media metadata pass: isPlayable=\(playable) duration=\(duration)")
+          SWIFT
