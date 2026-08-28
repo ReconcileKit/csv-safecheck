@@ -25,6 +25,7 @@ export const PLAN = Object.freeze({
   paidUrl: PAID_URL,
   width: 1280,
   height: 720,
+  priceSelector: ".hero .interest-link",
   plannedDurationSeconds: 90,
   cspEnforced: true,
   allowedHosts: ALLOWED_HOSTS,
@@ -157,7 +158,11 @@ async function capture() {
       throw new Error(`Canonical production load failed: ${landingResponse?.status()} ${page.url()}`);
     }
     if (!(await page.title()).includes("CSV SafeCheck")) throw new Error("Unexpected production title");
-    await page.locator("text=Local Batch Audit Pack — $3.00 USD, one-time").waitFor();
+    const priceLink = page.locator(PLAN.priceSelector);
+    await priceLink.waitFor({ state: "visible" });
+    if ((await priceLink.textContent())?.trim() !== "Local Batch Audit Pack — $3.00 USD, one-time") {
+      throw new Error("Production launch price copy did not match the reviewed offer");
+    }
     await hold(page, "#hero-title", 7);
     await hold(page, ".lede", 6);
     await hold(page, ".hero .interest-link", 7);

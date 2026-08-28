@@ -15,6 +15,7 @@ test("capture plan is bounded to real production, synthetic data, and a reviewer
   assert.equal(plan.paidUrl, "https://csv-safecheck.pages.dev/repair-pack");
   assert.equal(plan.width, 1280);
   assert.equal(plan.height, 720);
+  assert.equal(plan.priceSelector, ".hero .interest-link");
   assert.ok(plan.plannedDurationSeconds >= 60 && plan.plannedDurationSeconds <= 120);
   assert.equal(plan.cspEnforced, true);
   assert.deepEqual(plan.allowedHosts, ["csv-safecheck.pages.dev"]);
