@@ -28,11 +28,11 @@ The initial release checks only a documented subset and does not guarantee Shopi
 
 Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en/manual/products/import-export/using-csv?locale=en-US), [product import instructions](https://help.shopify.com/en/manual/products/import-export/import-products), and [common product CSV import problems](https://help.shopify.com/en/manual/products/import-export/common-import-issues). The download includes longer guides with exact boundaries and safe next steps.
 
-## Repair Pack research
+## Local Batch Audit Pack
 
-The free checker remains useful without payment. A one-time `$9` Local Repair Pack—local batch files, deterministic repair export, and a before/after audit bundle—is only a product hypothesis and is not for sale.
+The free checker remains useful without payment. For people who need to check a batch, the one-time [Local Batch Audit Pack checkout](https://csv-safecheck-usdc-checkout.csv-safecheck-usdc-checkout.workers.dev/) processes up to 25 Shopify CSVs locally in one browser session, produces a combined audit report, and exports separate corrected copies only for deterministic safe fixes.
 
-To share private interest without a GitHub account or public post, email [reconcilekit@proton.me](mailto:reconcilekit@proton.me?subject=CSV%20SafeCheck%3A%20%249%20Local%20Repair%20Pack%20interest&amp;body=I%20would%20consider%20the%20one-time%20%249%20Local%20Repair%20Pack.%20Do%20not%20attach%20or%20paste%20CSV%20files%2C%20catalog%20data%2C%20store%20data%2C%20or%20personal%20data.) using the fixed subject. Never attach or paste CSV files, catalog data, store data, or personal data. This is not a support channel, no individual response is promised, and sending interest is not a purchase.
+The temporary sprint price is a unique exact quote between `2.990001` and `3.000000` native USDC on Base Mainnet. Card checkout is being prepared separately. The checkout does not connect to a wallet and never requests a signature, private key, seed phrase, password, or token approval. Read the displayed network, token contract, address, exact amount, and payment/refund boundary before sending. The receiving address is receive-only from this application's perspective, so wrong transfers and duplicate payments cannot be automatically returned.
 
 ## Support and scope
 
