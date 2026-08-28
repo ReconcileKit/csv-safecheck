@@ -6,7 +6,7 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 [Open CSV SafeCheck](https://csv-safecheck.pages.dev/) in a current browser. There is no sign-in or upload step: the static page is delivered by Cloudflare Pages, while the selected CSV contents are processed in browser memory and are not sent to the host.
 
-[Watch the 104-second production demo](https://csv-safecheck.pages.dev/media/csv-safecheck-demo-v1.mp4) to see the free checker and paid batch workflow explained with synthetic data only.
+[Watch the 104-second production demo](https://csv-safecheck.pages.dev/demo) to see the free checker and paid batch workflow explained with synthetic data only. The browser page includes segmented playback, a direct MP4 download, and a written transcript.
 
 ## Download the offline edition
 
