@@ -36,6 +36,8 @@ The free checker remains useful without payment. For people who need to check a 
 
 [Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11) through Lemon Squeezy for card checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
 
+Shopify partners and migration teams can instead buy the **ZAR220 one-time [Agency Batch License](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056)**. It licenses one purchasing organization to use the same local pack internally on up to 10 authorized client migration or catalog projects. The tool and agency license are delivered automatically; there is no subscription or custom-work obligation.
+
 The temporary [Base-USDC checkout](https://csv-safecheck-usdc-checkout.csv-safecheck-usdc-checkout.workers.dev/) remains available as an alternative. It creates a unique exact quote between `2.990001` and `3.000000` native USDC on Base Mainnet for the same artifact; the small variation associates one payment with one entitlement and is not an exchange-rate claim. The checkout does not connect to a wallet and never requests a signature, private key, seed phrase, password, or token approval. Read the displayed network, token contract, address, exact amount, and payment/refund boundary before sending. The receiving address is receive-only from this application's perspective, so wrong transfers and duplicate payments cannot be automatically returned.
 
 ## Support and scope
