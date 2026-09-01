@@ -10,7 +10,7 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 [Open CSV SafeCheck](https://csv-safecheck.pages.dev/) in a current browser. There is no sign-in or upload step: the static page is delivered by Cloudflare Pages, while the selected CSV contents are processed in browser memory and are not sent to the host.
 
-Need batch or agency use? [Preview the exact batch summary and compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): through 2 Sep 2026 at 00:00 UTC, code `LAUNCH10` makes the Local Batch Audit Pack ZAR49.50 for up to 25 files and the Agency Batch License ZAR198 for one organization across up to 10 authorized client migration projects.
+Need batch or agency use? [Preview the exact batch summary and compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): through 2 Sep 2026 at 00:00 UTC, code `LAUNCH10` makes the Local Batch Audit Pack ZAR49.50 for up to 25 files and the [Agency Batch License ZAR198](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056?checkout%5Bdiscount_code%5D=LAUNCH10) for one organization across up to 10 authorized client migration projects.
 
 Shopify creators, consultants, and migration specialists can also [review the affiliate program](https://csv-safecheck.pages.dev/affiliates): approved partners earn 10% on attributed sales through Lemon Squeezy.
 
