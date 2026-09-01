@@ -38,9 +38,11 @@ Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en
 
 The free checker remains useful without payment. For people who need to check a batch, the **ZAR55 one-time Local Batch Audit Pack** processes up to 25 Shopify CSVs locally in one browser session, produces per-file reports plus a combined audit report, and exports separate corrected copies only for deterministic safe fixes when no formula risk is detected. There is no subscription.
 
-[Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11) through Lemon Squeezy for card checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
+**10% launch discount:** both checkout links apply code `LAUNCH10` automatically through 2 Sep 2026 at 00:00 UTC.
 
-Shopify partners and migration teams can instead buy the **ZAR220 one-time [Agency Batch License](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056)**. It licenses one purchasing organization to use the same local pack internally on up to 10 authorized client migration or catalog projects. The tool and agency license are delivered automatically; there is no subscription or custom-work obligation.
+[Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11?checkout%5Bdiscount_code%5D=LAUNCH10) through Lemon Squeezy for card checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
+
+Shopify partners and migration teams can instead buy the **ZAR220 one-time [Agency Batch License](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056?checkout%5Bdiscount_code%5D=LAUNCH10)**. It licenses one purchasing organization to use the same local pack internally on up to 10 authorized client migration or catalog projects. The tool and agency license are delivered automatically; there is no subscription or custom-work obligation.
 
 ## Support and scope
 
