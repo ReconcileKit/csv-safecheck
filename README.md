@@ -1,5 +1,7 @@
 # CSV SafeCheck
 
+<p align="center"><img src="assets/csv-safecheck-logo.png" width="120" height="120" alt="CSV SafeCheck spreadsheet validation mark"></p>
+
 CSV SafeCheck is a free, independent preflight utility for current Shopify product CSV files. It reports a documented subset of deterministic import problems with exact row and column locations and applies only conservative formatting fixes.
 
 ## Use the checker online
