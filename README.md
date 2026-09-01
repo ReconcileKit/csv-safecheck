@@ -29,6 +29,8 @@ The initial release checks only a documented subset and does not guarantee Shopi
 
 ## Shopify CSV problems covered
 
+Start with the [conservative Shopify product CSV preflight checklist](https://github.com/ReconcileKit/csv-safecheck/discussions/4) for backups, encoding, headers, variant grouping, store-dependent limits, and small-batch testing.
+
 - **[Illegal quoting, invalid UTF-8, and malformed rows](https://csv-safecheck.pages.dev/guides/illegal-quoting):** the strict parser rejects malformed quoted-field suffixes, invalid encoding, NUL bytes, and inconsistent column counts instead of silently merging data.
 - **[Invalid or incorrect product CSV headers](https://csv-safecheck.pages.dev/guides/invalid-headers):** the current profile checks case-sensitive core headings, duplicate headers, create/update identifiers, and important dynamic-column exceptions.
 - **[Validation failed: options are not unique / duplicate product variants](https://csv-safecheck.pages.dev/guides/duplicate-variants):** expressed option combinations are compared within each handle while image-only continuation rows are excluded from duplicate-variant findings.
