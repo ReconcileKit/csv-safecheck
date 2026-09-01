@@ -10,8 +10,6 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 Need batch or agency use? [Compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): the ZAR55 one-time Local Batch Audit Pack checks up to 25 files, while the ZAR220 one-time Agency Batch License covers one organization across up to 10 authorized client migration projects.
 
-[Watch the 104-second production demo](https://csv-safecheck.pages.dev/demo) to see the free checker and paid batch workflow explained with synthetic data only. The browser page includes segmented playback, a direct MP4 download, and a written transcript.
-
 ## Download the offline edition
 
 1. [Download CSV SafeCheck offline v0.1.0](https://github.com/ReconcileKit/csv-safecheck/releases/download/v0.1.0/csv-safecheck-offline-v0.1.0.zip) (ZIP, 25,363 bytes).
