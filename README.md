@@ -6,7 +6,7 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 [Open CSV SafeCheck](https://csv-safecheck.pages.dev/) in a current browser. There is no sign-in or upload step: the static page is delivered by Cloudflare Pages, while the selected CSV contents are processed in browser memory and are not sent to the host.
 
-Need batch or agency use? [Compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): the $3 one-time Local Batch Audit Pack checks up to 25 files, while the ZAR220 one-time Agency Batch License covers one organization across up to 10 authorized client migration projects.
+Need batch or agency use? [Compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): the ZAR55 one-time Local Batch Audit Pack checks up to 25 files, while the ZAR220 one-time Agency Batch License covers one organization across up to 10 authorized client migration projects.
 
 [Watch the 104-second production demo](https://csv-safecheck.pages.dev/demo) to see the free checker and paid batch workflow explained with synthetic data only. The browser page includes segmented playback, a direct MP4 download, and a written transcript.
 
@@ -34,7 +34,7 @@ Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en
 
 ## Local Batch Audit Pack
 
-The free checker remains useful without payment. For people who need to check a batch, the **$3.00 USD one-time Local Batch Audit Pack** processes up to 25 Shopify CSVs locally in one browser session, produces per-file reports plus a combined audit report, and exports separate corrected copies only for deterministic safe fixes when no formula risk is detected. There is no subscription.
+The free checker remains useful without payment. For people who need to check a batch, the **ZAR55 one-time Local Batch Audit Pack** processes up to 25 Shopify CSVs locally in one browser session, produces per-file reports plus a combined audit report, and exports separate corrected copies only for deterministic safe fixes when no formula risk is detected. There is no subscription.
 
 [Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11) through Lemon Squeezy for card checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
 
