@@ -38,6 +38,8 @@ Primary references: Shopify's [product CSV guidance](https://help.shopify.com/en
 
 The free checker remains useful without payment. For people who need to check a batch, the **ZAR55 one-time Local Batch Audit Pack** processes up to 25 Shopify CSVs locally in one browser session, produces per-file reports plus a combined audit report, and exports separate corrected copies only for deterministic safe fixes when no formula risk is detected. There is no subscription.
 
+[Inspect a sanitized sample combined audit](https://csv-safecheck.pages.dev/sample-batch-audit.json), generated from fictional inputs by the real validator before checkout.
+
 **10% launch discount:** both checkout links apply code `LAUNCH10` automatically through 2 Sep 2026 at 00:00 UTC.
 
 [Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11?checkout%5Bdiscount_code%5D=LAUNCH10) through Lemon Squeezy for card or PayPal checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
