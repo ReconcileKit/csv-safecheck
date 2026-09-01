@@ -10,7 +10,7 @@ CSV SafeCheck is a free, independent preflight utility for current Shopify produ
 
 [Open CSV SafeCheck](https://csv-safecheck.pages.dev/) in a current browser. There is no sign-in or upload step: the static page is delivered by Cloudflare Pages, while the selected CSV contents are processed in browser memory and are not sent to the host.
 
-Need batch or agency use? [Preview the exact batch summary and compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): through 2 Sep 2026 at 00:00 UTC, code `LAUNCH10` makes the Local Batch Audit Pack ZAR46.75 for up to 25 files and the [Agency Batch License ZAR187](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056?checkout%5Bdiscount_code%5D=LAUNCH10) for one organization across up to 10 authorized client migration projects.
+Need batch or agency use? [Preview the exact batch summary and compare the automatically delivered paid options](https://csv-safecheck.pages.dev/repair-pack): through 2 Sep 2026 at 00:00 UTC, code `LAUNCH10` makes the Local Batch Audit Pack ZAR41.25 for up to 25 files and the [Agency Batch License ZAR165](https://csv-safecheck.lemonsqueezy.com/checkout/buy/0808e074-9a57-4ae5-9aa2-2906881a1056?checkout%5Bdiscount_code%5D=LAUNCH10) for one organization across up to 10 authorized client migration projects.
 
 Shopify creators, consultants, and migration specialists can also [review the affiliate program](https://csv-safecheck.pages.dev/affiliates): approved partners earn 10% on attributed sales through Lemon Squeezy.
 
@@ -44,7 +44,7 @@ The free checker remains useful without payment. For people who need to check a 
 
 [Inspect a sanitized sample combined audit](https://csv-safecheck.pages.dev/sample-batch-audit.json), generated from fictional inputs by the real validator before checkout.
 
-**15% launch discount:** both checkout links apply code `LAUNCH10` automatically through 2 Sep 2026 at 00:00 UTC.
+**25% launch discount:** both checkout links apply code `LAUNCH10` automatically through 2 Sep 2026 at 00:00 UTC.
 
 [Buy the Local Batch Audit Pack](https://csv-safecheck.lemonsqueezy.com/checkout/buy/660279c4-dfc6-4b9a-81e5-13aebef11d11?checkout%5Bdiscount_code%5D=LAUNCH10) through Lemon Squeezy for card or PayPal checkout and automatic delivery. The delivered file is self-contained and has no network client, analytics, account, wallet, or payment code; selected CSV contents and filenames remain in the browser.
 
